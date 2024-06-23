@@ -20,11 +20,11 @@ import com.awanama.aleinfo.navigation.TopLevelDestination
 import com.awanama.aleinfo.ui.theme.Green50
 
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     onLoginClick: () -> Unit,
-    onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val email = remember { mutableStateOf("") }
     val username = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
 
@@ -36,45 +36,52 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            OutlinedTextField(
+                value = email.value,
+                onValueChange = { email.value = it },
+                label = { Text(text = "Email") },
+            )
+
             OutlinedTextField(
                 value = username.value,
                 onValueChange = { username.value = it },
-                label = { Text(text = "Username") },
+                label = { Text(text = "Username")},
+                modifier = Modifier.padding(vertical = 5.dp)
             )
 
             OutlinedTextField(
                 value = password.value,
                 onValueChange = { password.value = it },
                 label = { Text(text = "Password") },
-                modifier = Modifier.padding(vertical = 10.dp)
+                modifier = Modifier.padding(vertical = 5.dp)
             )
 
             Button(onClick = onLoginClick,
                 modifier = Modifier.padding(vertical = 5.dp)) {
-                Text(text = "Login")
+                Text(text = "Create Account")
             }
 
-            Button(onClick = onRegisterClick,
+            Button(onClick = onLoginClick,
                 colors = ButtonDefaults.buttonColors(Green50),
                 modifier = Modifier.padding(vertical = 5.dp)){
-                Text(text = "Register Account")
+                Text(text = "Go To Login")
             }
         }
     }
 }
 
 @Composable
-fun LoginRoute(
+fun RegisterRoute(
     onNavigateClick: (source: String) -> Unit
 ) {
-    LoginScreen(
-        onLoginClick = { onNavigateClick(TopLevelDestination.Home.route) },
-        onRegisterClick = { onNavigateClick(TopLevelDestination.Register.route) }
+    RegisterScreen(
+        onLoginClick = { onNavigateClick(TopLevelDestination.Login.route) }
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview() {
-    LoginScreen(onLoginClick = {}, onRegisterClick = {})
+fun RegisterScreenPreview() {
+    RegisterScreen(onLoginClick = {})
 }

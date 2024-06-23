@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.bundles.retrofit)
     implementation(libs.okhttp.interceptor.logging)
     implementation(libs.moshi)
+    implementation ("com.squareup.retrofit2:converter-moshi:2.11.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     ksp(libs.moshi.kotlin.codegen)
     implementation(libs.coil)
     implementation(libs.flower)

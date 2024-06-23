@@ -7,13 +7,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.awanama.aleinfo.ui.detail.DetailRoute
 import com.awanama.aleinfo.ui.navbar.NavBar
+import com.awanama.aleinfo.ui.screens.DetailScreen
 import com.awanama.aleinfo.ui.screens.FavsRoute
 import com.awanama.aleinfo.ui.screens.HomeRoute
 import com.awanama.aleinfo.ui.screens.LoginRoute
 import com.awanama.aleinfo.ui.screens.ProfileRoute
-import com.awanama.aleinfo.utility.Constants
+import com.awanama.aleinfo.ui.screens.RegisterRoute
 
 @Composable
 fun AppNavigation(
@@ -26,63 +26,51 @@ fun AppNavigation(
         startDestination = TopLevelDestination.Login.route
     ) {
 
-//        composable(route = TopLevelDestination.Login.route) {
-//            LoginRoute(
-//                onNavigateClick = { source ->
-//                    navController.navigate(TopLevelDestination.Login.withArgs(source))
-//                }
-//            )
-//        }
-//
-//        composable(route = TopLevelDestination.Home.route) {
-//            HomeRoute(
-//                onNavigateClick = { source ->
-//                    navController.navigate(TopLevelDestination.Detail.withArgs(source))
-//                }
-//            )
-//        }
-
         composable(route = TopLevelDestination.Login.route) {
             LoginRoute { destination ->
                 navController.navigate(destination)
             }
         }
 
+        composable(route = TopLevelDestination.Register.route) {
+            RegisterRoute { destination ->
+                navController.navigate(destination)
+            }
+        }
+
         composable(route = TopLevelDestination.Home.route) {
             HomeRoute(
-                onNavigateClick = { source ->
-                    navController.navigate(TopLevelDestination.Detail.withArgs(source))
+                navController = navController,
+                onNavigateClick = { destination ->
+                    navController.navigate(destination)
                 }
             )
         }
 
-        composable(route = TopLevelDestination.Detail.route + "/{${Constants.SOURCE}}",
+        composable(
+            route = TopLevelDestination.Detail.route,
             arguments = listOf(
-                navArgument(Constants.SOURCE) {
-                    type = NavType.StringType
+                navArgument("id") {
+                    type = NavType.IntType
                 }
             )
         ) { backStackEntry ->
-            val source = backStackEntry.arguments?.getString(Constants.SOURCE) ?: return@composable
-
-            DetailRoute(
-                source = source,
-                onBackClick = { navController.popBackStack() }
-            )
+            val id = backStackEntry.arguments?.getInt("beerId") ?: return@composable
+            DetailScreen(beerId = id)
         }
 
         composable(route = NavBar.Favs.route) {
             FavsRoute(
-                onNavigateClick = { source ->
-                    navController.navigate(TopLevelDestination.Detail.withArgs(source))
+                onNavigateClick = { destination ->
+                    navController.navigate(destination)
                 }
             )
         }
 
         composable(route = NavBar.Profile.route) {
             ProfileRoute(
-                onNavigateClick = { source ->
-                    navController.navigate(TopLevelDestination.Detail.withArgs(source))
+                onNavigateClick = { destination ->
+                    navController.navigate(destination)
                 }
             )
         }
