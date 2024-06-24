@@ -7,6 +7,3 @@ This application used the following Library:
 - Moshi
 - Coil
 - Hilt
-
-Upcoming features:
-- Login and Register functionality using Room local database
