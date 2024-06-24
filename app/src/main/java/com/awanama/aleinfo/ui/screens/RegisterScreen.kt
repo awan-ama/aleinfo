@@ -10,23 +10,34 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.awanama.aleinfo.navigation.TopLevelDestination
 import com.awanama.aleinfo.ui.theme.Green50
+import com.awanama.aleinfo.ui.viewmodel.AuthViewModel
 
 @Composable
 fun RegisterScreen(
+    onRegisterSuccess: () -> Unit,
     onLoginClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
     val email = remember { mutableStateOf("") }
     val username = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
+    val isLoggedIn by authViewModel.isLoggedIn.collectAsState()
+
+    if (isLoggedIn) {
+        onRegisterSuccess()
+    }
 
     Scaffold {
         Column(
@@ -36,7 +47,6 @@ fun RegisterScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             OutlinedTextField(
                 value = email.value,
                 onValueChange = { email.value = it },
@@ -57,14 +67,20 @@ fun RegisterScreen(
                 modifier = Modifier.padding(vertical = 5.dp)
             )
 
-            Button(onClick = onLoginClick,
-                modifier = Modifier.padding(vertical = 5.dp)) {
+            Button(
+                onClick = {
+                    authViewModel.register(username.value, email.value, password.value)
+                },
+                modifier = Modifier.padding(vertical = 5.dp)
+            ) {
                 Text(text = "Create Account")
             }
 
-            Button(onClick = onLoginClick,
+            Button(
+                onClick = onLoginClick,
                 colors = ButtonDefaults.buttonColors(Green50),
-                modifier = Modifier.padding(vertical = 5.dp)){
+                modifier = Modifier.padding(vertical = 5.dp)
+            ){
                 Text(text = "Go To Login")
             }
         }
@@ -76,6 +92,7 @@ fun RegisterRoute(
     onNavigateClick: (source: String) -> Unit
 ) {
     RegisterScreen(
+        onRegisterSuccess = { onNavigateClick(TopLevelDestination.Home.route) },
         onLoginClick = { onNavigateClick(TopLevelDestination.Login.route) }
     )
 }
@@ -83,5 +100,5 @@ fun RegisterRoute(
 @Preview(showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen(onLoginClick = {})
+    RegisterScreen(onRegisterSuccess = {}, onLoginClick = {})
 }
