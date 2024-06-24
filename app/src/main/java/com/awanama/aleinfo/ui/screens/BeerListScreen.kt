@@ -14,8 +14,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -33,9 +34,13 @@ import com.awanama.aleinfo.ui.viewmodel.BeerViewModel
 
 @Composable
 fun BeerListScreen(navController: NavHostController, beerViewModel: BeerViewModel = viewModel()) {
-    val beers by beerViewModel.beers.collectAsState()
+    val beers by beerViewModel.beers.observeAsState(emptyList())
     var searchQuery by remember { mutableStateOf("") }
     val filteredBeers = beers.filter { it.name.contains(searchQuery, ignoreCase = true) }
+
+    LaunchedEffect(Unit) {
+        beerViewModel.fetchBeers()
+    }
 
     Column(
         modifier = Modifier

@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.androidx.runtime.livedata)
     ksp(libs.hilt.android.compiler)
     implementation(libs.bundles.room)
     ksp(libs.room.compiler)

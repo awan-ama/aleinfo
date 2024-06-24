@@ -41,8 +41,8 @@ fun AppNavigation(
         composable(route = TopLevelDestination.Home.route) {
             HomeRoute(
                 navController = navController,
-                onNavigateClick = { destination ->
-                    navController.navigate(destination)
+                onNavigateClick = { source ->
+                    navController.navigate(TopLevelDestination.Detail.withArgs(source))
                 }
             )
         }
@@ -50,27 +50,27 @@ fun AppNavigation(
         composable(
             route = TopLevelDestination.Detail.route,
             arguments = listOf(
-                navArgument("id") {
+                navArgument("beerId") {
                     type = NavType.IntType
                 }
             )
         ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getInt("beerId") ?: return@composable
-            DetailScreen(beerId = id)
+            val beerId = backStackEntry.arguments?.getInt("beerId") ?: return@composable
+            DetailScreen(beerId = beerId)
         }
 
         composable(route = NavBar.Favs.route) {
             FavsRoute(
-                onNavigateClick = { destination ->
-                    navController.navigate(destination)
+                onNavigateClick = { source ->
+                    navController.navigate(TopLevelDestination.Detail.withArgs(source))
                 }
             )
         }
 
         composable(route = NavBar.Profile.route) {
             ProfileRoute(
-                onNavigateClick = { destination ->
-                    navController.navigate(destination)
+                onNavigateClick = { source ->
+                    navController.navigate(TopLevelDestination.Detail.withArgs(source))
                 }
             )
         }

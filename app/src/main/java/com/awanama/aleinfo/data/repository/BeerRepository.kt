@@ -7,9 +7,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-object BeerRepository {
-    private const val BASE_URL = "https://api.sampleapis.com/beers/"
-
+class BeerRepository {
     private val moshi: Moshi by lazy {
         Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
@@ -23,7 +21,7 @@ object BeerRepository {
             .build()
     }
 
-    val api: BeerApiService by lazy {
+    private val api: BeerApiService by lazy {
         retrofit.create(BeerApiService::class.java)
     }
 
@@ -31,4 +29,7 @@ object BeerRepository {
         return api.getAles()
     }
 
+    companion object {
+        private const val BASE_URL = "https://api.sampleapis.com/beers/"
+    }
 }

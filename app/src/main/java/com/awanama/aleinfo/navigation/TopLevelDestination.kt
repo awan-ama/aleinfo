@@ -20,10 +20,10 @@ sealed class TopLevelDestination(
 
     data object Detail : TopLevelDestination(
         title = "Detail",
-        route = "detail/{id}"
+        route = "detail/{beerId}"
     ) {
-        fun createRoute(id: Int): String {
-            return "detail/$id"
+        fun createRoute(beerId: Int): String {
+            return "detail/$beerId"
         }
     }
 
