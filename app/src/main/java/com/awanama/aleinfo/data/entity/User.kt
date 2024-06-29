@@ -1,4 +1,4 @@
-package com.awanama.aleinfo.data.model
+package com.awanama.aleinfo.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

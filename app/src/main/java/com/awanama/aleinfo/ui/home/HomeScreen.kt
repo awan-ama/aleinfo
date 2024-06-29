@@ -1,4 +1,4 @@
-package com.awanama.aleinfo.ui.screens
+package com.awanama.aleinfo.ui.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,9 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import com.awanama.aleinfo.ui.list.BeerListScreen
 
 @Composable
-fun ProfileScreen(
+fun HomeScreen(
+    navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
     Scaffold {
@@ -22,19 +25,22 @@ fun ProfileScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            BeerListScreen(navController = navController)
         }
     }
 }
 
 @Composable
-fun ProfileRoute(
+fun HomeRoute(
+    navController: NavHostController,
     onNavigateClick: (source: String) -> Unit
 ) {
-    ProfileScreen()
+    HomeScreen(navController = navController)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ProfileScreenPreview() {
-    ProfileScreen()
+fun HomeScreenPreview() {
+    val dummyNavController = androidx.navigation.compose.rememberNavController()
+    HomeScreen(navController = dummyNavController)
 }

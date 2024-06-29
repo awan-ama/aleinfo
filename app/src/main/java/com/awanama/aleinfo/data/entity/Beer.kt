@@ -1,4 +1,4 @@
-package com.awanama.aleinfo.data.model
+package com.awanama.aleinfo.data.entity
 
 import com.squareup.moshi.Json
 

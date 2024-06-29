@@ -1,4 +1,4 @@
-package com.awanama.aleinfo.ui.screens
+package com.awanama.aleinfo.ui.ranks
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

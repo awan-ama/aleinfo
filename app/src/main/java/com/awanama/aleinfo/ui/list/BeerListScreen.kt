@@ -1,4 +1,4 @@
-package com.awanama.aleinfo.ui.screens
+package com.awanama.aleinfo.ui.list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -28,9 +28,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.awanama.aleinfo.R
-import com.awanama.aleinfo.data.model.Beer
+import com.awanama.aleinfo.data.entity.Beer
 import com.awanama.aleinfo.navigation.TopLevelDestination
-import com.awanama.aleinfo.ui.viewmodel.BeerViewModel
 
 @Composable
 fun BeerListScreen(navController: NavHostController, beerViewModel: BeerViewModel = viewModel()) {

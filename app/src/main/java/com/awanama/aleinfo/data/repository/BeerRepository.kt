@@ -1,6 +1,6 @@
 package com.awanama.aleinfo.data.repository
 
-import com.awanama.aleinfo.data.model.Beer
+import com.awanama.aleinfo.data.entity.Beer
 import com.awanama.aleinfo.data.remote.BeerApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

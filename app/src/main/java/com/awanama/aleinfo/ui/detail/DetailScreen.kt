@@ -1,4 +1,4 @@
-package com.awanama.aleinfo.ui.screens
+package com.awanama.aleinfo.ui.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -18,8 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.awanama.aleinfo.R
-import com.awanama.aleinfo.data.model.Beer
-import com.awanama.aleinfo.ui.viewmodel.DetailViewModel
+import com.awanama.aleinfo.data.entity.Beer
 
 @Composable
 fun DetailScreen(beerId: Int) {

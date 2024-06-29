@@ -20,7 +20,7 @@ fun App() {
 
         Scaffold(
             bottomBar = {
-                if (currentRoute != TopLevelDestination.Login.route && currentRoute != TopLevelDestination.Register.route) {
+                if (currentRoute != TopLevelDestination.Login.route && currentRoute != TopLevelDestination.Register.route && currentRoute != TopLevelDestination.Detail.route) {
                     NavBarNavigation(navController = navController)
                 }
             }

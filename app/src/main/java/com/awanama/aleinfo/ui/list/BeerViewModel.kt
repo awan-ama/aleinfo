@@ -1,10 +1,10 @@
-package com.awanama.aleinfo.ui.viewmodel
+package com.awanama.aleinfo.ui.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.awanama.aleinfo.data.model.Beer
+import com.awanama.aleinfo.data.entity.Beer
 import com.awanama.aleinfo.data.repository.BeerRepository
 import kotlinx.coroutines.launch
 

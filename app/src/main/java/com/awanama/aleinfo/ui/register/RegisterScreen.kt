@@ -1,11 +1,11 @@
-package com.awanama.aleinfo.ui.screens
+package com.awanama.aleinfo.ui.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,22 +20,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awanama.aleinfo.navigation.TopLevelDestination
-import com.awanama.aleinfo.ui.theme.Green50
-import com.awanama.aleinfo.ui.viewmodel.AuthViewModel
 
 @Composable
 fun RegisterScreen(
     onRegisterSuccess: () -> Unit,
     onLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = hiltViewModel()
+    registerViewModel: RegisterViewModel = hiltViewModel()
 ) {
-    val email = remember { mutableStateOf("") }
     val username = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
-    val isLoggedIn by authViewModel.isLoggedIn.collectAsState()
+    val isRegistered by registerViewModel.isRegistered.collectAsState()
+    val registerError by registerViewModel.registerError.collectAsState()
 
-    if (isLoggedIn) {
+    if (isRegistered) {
         onRegisterSuccess()
     }
 
@@ -48,43 +47,43 @@ fun RegisterScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
-                value = email.value,
-                onValueChange = { email.value = it },
-                label = { Text(text = "Email") },
-            )
-
-            OutlinedTextField(
                 value = username.value,
                 onValueChange = { username.value = it },
-                label = { Text(text = "Username")},
-                modifier = Modifier.padding(vertical = 5.dp)
+                label = { Text("Username") }
             )
-
+            OutlinedTextField(
+                value = email.value,
+                onValueChange = { email.value = it },
+                label = { Text("Email") }
+            )
             OutlinedTextField(
                 value = password.value,
                 onValueChange = { password.value = it },
-                label = { Text(text = "Password") },
-                modifier = Modifier.padding(vertical = 5.dp)
+                label = { Text("Password") }
             )
-
             Button(
-                onClick = {
-                    authViewModel.register(username.value, email.value, password.value)
-                },
-                modifier = Modifier.padding(vertical = 5.dp)
+                onClick = { registerViewModel.register(username.value, email.value, password.value) },
+                modifier = Modifier.padding(top = 16.dp)
             ) {
-                Text(text = "Create Account")
+                Text("Register")
             }
-
+            if (registerError != null) {
+                Text(text = registerError ?: "", color = MaterialTheme.colorScheme.error)
+            }
             Button(
                 onClick = onLoginClick,
-                colors = ButtonDefaults.buttonColors(Green50),
-                modifier = Modifier.padding(vertical = 5.dp)
-            ){
-                Text(text = "Go To Login")
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Text("Login")
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RegisterScreenPreview() {
+    RegisterScreen(onRegisterSuccess = {}, onLoginClick = {})
 }
 
 @Composable
@@ -92,13 +91,7 @@ fun RegisterRoute(
     onNavigateClick: (source: String) -> Unit
 ) {
     RegisterScreen(
-        onRegisterSuccess = { onNavigateClick(TopLevelDestination.Home.route) },
+        onRegisterSuccess = { onNavigateClick(TopLevelDestination.Login.route) },
         onLoginClick = { onNavigateClick(TopLevelDestination.Login.route) }
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun RegisterScreenPreview() {
-    RegisterScreen(onRegisterSuccess = {}, onLoginClick = {})
 }

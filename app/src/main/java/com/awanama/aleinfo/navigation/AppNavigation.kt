@@ -8,12 +8,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.awanama.aleinfo.ui.navbar.NavBar
-import com.awanama.aleinfo.ui.screens.DetailScreen
-import com.awanama.aleinfo.ui.screens.FavsRoute
-import com.awanama.aleinfo.ui.screens.HomeRoute
-import com.awanama.aleinfo.ui.screens.LoginRoute
-import com.awanama.aleinfo.ui.screens.ProfileRoute
-import com.awanama.aleinfo.ui.screens.RegisterRoute
+import com.awanama.aleinfo.ui.detail.DetailScreen
+import com.awanama.aleinfo.ui.ranks.FavsRoute
+import com.awanama.aleinfo.ui.home.HomeRoute
+import com.awanama.aleinfo.ui.login.LoginRoute
+import com.awanama.aleinfo.ui.profile.ProfileRoute
+import com.awanama.aleinfo.ui.register.RegisterRoute
 
 @Composable
 fun AppNavigation(

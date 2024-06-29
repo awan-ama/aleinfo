@@ -3,7 +3,7 @@ package com.awanama.aleinfo.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.awanama.aleinfo.data.dao.UserDao
-import com.awanama.aleinfo.data.model.User
+import com.awanama.aleinfo.data.entity.User
 
 @Database(
     version = 1,

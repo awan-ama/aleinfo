@@ -1,11 +1,11 @@
-package com.awanama.aleinfo.ui.screens
+package com.awanama.aleinfo.ui.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,19 +20,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.awanama.aleinfo.navigation.TopLevelDestination
-import com.awanama.aleinfo.ui.theme.Green50
-import com.awanama.aleinfo.ui.viewmodel.AuthViewModel
 
 @Composable
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
     onRegisterClick: () -> Unit,
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = hiltViewModel()
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val username = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
-    val isLoggedIn by authViewModel.isLoggedIn.collectAsState()
+    val isLoggedIn by loginViewModel.isLoggedIn.collectAsState()
+    val loginError by loginViewModel.loginError.collectAsState()
 
     if (isLoggedIn) {
         onLoginSuccess()
@@ -49,35 +48,38 @@ fun LoginScreen(
             OutlinedTextField(
                 value = username.value,
                 onValueChange = { username.value = it },
-                label = { Text(text = "Username") },
+                label = { Text("Username") }
             )
-
             OutlinedTextField(
                 value = password.value,
                 onValueChange = { password.value = it },
-                label = { Text(text = "Password") },
-                modifier = Modifier.padding(vertical = 10.dp)
+                label = { Text("Password") }
             )
-
             Button(
-                onClick = {
-                    authViewModel.login(username.value, password.value)
-                },
-                modifier = Modifier.padding(vertical = 5.dp)
+                onClick = { loginViewModel.login(username.value, password.value) },
+                modifier = Modifier.padding(top = 16.dp)
             ) {
-                Text(text = "Login")
+                Text("Login")
             }
-
+            if (loginError != null) {
+                Text(text = loginError ?: "", color = MaterialTheme.colorScheme.error)
+            }
             Button(
                 onClick = onRegisterClick,
-                colors = ButtonDefaults.buttonColors(Green50),
-                modifier = Modifier.padding(vertical = 5.dp)
+                modifier = Modifier.padding(top = 8.dp)
             ) {
-                Text(text = "Register Account")
+                Text("Register")
             }
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+    LoginScreen(onLoginSuccess = {}, onRegisterClick = {})
+}
+
 
 @Composable
 fun LoginRoute(
@@ -87,10 +89,4 @@ fun LoginRoute(
         onLoginSuccess = { onNavigateClick(TopLevelDestination.Home.route) },
         onRegisterClick = { onNavigateClick(TopLevelDestination.Register.route) }
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen(onLoginSuccess = {}, onRegisterClick = {})
 }
